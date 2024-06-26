@@ -9,7 +9,7 @@
       <v-app-bar-title>Harbor Easy CICD</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-icon>mdi-login</v-icon>
+        <v-icon @click="signOut">mdi-login</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -23,11 +23,18 @@
 import { ref } from 'vue'
 import NavBar from "@/components/NavBar.vue";
 import {RouterLink, RouterView} from 'vue-router'
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const drawer = ref(false)
 
 function toggleDrawer() {
   drawer.value = !drawer.value
+}
+
+function signOut() {
+  localStorage.removeItem("token");
+  router.push("/login");
 }
 </script>
 
@@ -35,8 +42,5 @@ function toggleDrawer() {
 html, body {
   height: 100%;
   margin: 0;
-}
-#app {
-  height: 100%;
 }
 </style>

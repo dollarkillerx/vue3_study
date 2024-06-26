@@ -19,9 +19,10 @@ export interface Task {
     last_run_time: number
 }
 
-export const GetTasks = async (token: string): Promise<TaskResp> => {
+export const GetTasks = async (): Promise<TaskResp> => {
     try {
         const response = await request.get<TaskResp>("/backstage/internal/tasks");
+        console.log(response);
         return response; // 返回从服务器接收到的数据
     } catch (error) {
         console.log(error)
@@ -34,4 +35,3 @@ export const GetTasks = async (token: string): Promise<TaskResp> => {
     }
 };
 
-export default GetTasks;

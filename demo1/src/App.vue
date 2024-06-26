@@ -1,26 +1,50 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue'
+import {RouterLink, RouterView} from 'vue-router'
+import ItemList from './components/Items/Item.components.vue'
+import type {ItemInterface} from "@/models";
+import {ref, reactive, computed} from 'vue'
 
 let count = ref(0);
+
+const Items: (ItemInterface)[] = reactive([
+  {
+    id: 1,
+    name: 'Coffee',
+    completed: false
+  },
+  {
+    id: 2,
+    name: 'Books',
+    completed: false
+  }
+]);
+
+const CompletedItem = (id: number) => {
+  console.log("aaaa",id);
+};
+
+const completedAll = computed(()=>{
+  let all = Items.length;
+  let countCompleted = 0;
+  Items.forEach(element => {
+    if (element.completed) {
+      countCompleted++;
+    }
+  });
+
+  return countCompleted == all ? 'All todo is completed' : 'No';
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-    <button @click="count++">Add</button>
-    <p>我的名字是：{{ count }}</p>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div>
+    <h1>My Todo List</h1>
+    <h3>{{completedAll}}</h3>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-  <RouterView />
+    <ItemList :Items="Items" @changeItem="CompletedItem"></ItemList>
+
+    {{Items}}
+  </div>
 </template>
 
 <style scoped>

@@ -1,5 +1,7 @@
-# vue3_study
-再次学习vue  感觉前端好难呀 
+# vue3_study 
+感觉css好难呀
+
+感觉我行了 这 css flex布局和 flutter column row 布局很像
 
 ### init project
 

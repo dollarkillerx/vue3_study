@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this is title</title>
+    <style>
+        body{
+            margin: 0;
+            height: 100vh;
+            background-color: #eeeeee;
+        }
+
+        * {
+            border: 1px solid black;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .column{
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        @media (max-width: 600px) {
+            .ceBian{
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="row">
+    <div style="height: 100vh; flex: 1" class="ceBian">
+
+    </div>
+
+    <div style="color: #333333; flex: 5;" class="column">
+        <!--        header-->
+        <div style="height: 60px"></div>
+        <!--        body-->
+        <div style="flex: 1; " class="row">
+<!--            left-->
+            <div style="flex: 3" class="column">
+                <!--                提示区-->
+                <div style="flex: 1" class="row">
+                    <div style="flex: 1"></div>
+                    <div style="flex: 1"></div>
+                    <div style="flex: 1"></div>
+                    <div style="flex: 1"></div>
+                </div>
+                <!--                消息区-->
+                <div style="flex: 3" class="column">
+                    <div style="height: 160px"></div>
+                    <div style="height: 160px"></div>
+                    <div style="height: 160px"></div>
+                    <div style="height: 160px"></div>
+                </div>
+            </div>
+<!--            right-->
+            <div style="flex: 1;" class="column">
+<!--                提示区-->
+                <div style="flex: 1"></div>
+<!--                消息区-->
+                <div style="flex: 3"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

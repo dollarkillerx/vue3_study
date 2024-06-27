@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS ListView Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .list-view {
+            width: 300px;
+            height: 400px;
+            overflow-y: scroll;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .list-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .list-item:hover {
+            background-color: #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+<div class="list-view">
+    <div class="list-item">Item 1</div>
+    <div class="list-item">Item 2</div>
+    <div class="list-item">Item 3</div>
+    <div class="list-item">Item 4</div>
+    <div class="list-item">Item 5</div>
+    <div class="list-item">Item 6</div>
+    <div class="list-item">Item 7</div>
+    <div class="list-item">Item 8</div>
+    <div class="list-item">Item 9</div>
+    <div class="list-item">Item 10</div>
+</div>
+</body>
+</html>

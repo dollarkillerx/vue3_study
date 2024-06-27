@@ -8,7 +8,8 @@
 ```
 bun create vue@latest
 
-bun add tailwindcss
+bun add tailwindcss@latest postcss@latest autoprefixer@latest
  
-npx tailwindcss init
+npx tailwindcss init -p
 ```
+https://v2.tailwindcss.com/docs/guides/vue-3-vite

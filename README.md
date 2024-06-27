@@ -5,4 +5,10 @@
 
 ### init project
 
-`bun create vue@latest`
+```
+bun create vue@latest
+
+bun add tailwindcss
+ 
+npx tailwindcss init
+```

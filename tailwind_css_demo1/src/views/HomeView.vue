@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="text-read-200 font-mono bg-amber-50">
+  <div class="text-read-200 font-mono">
     <div>
       <nav>
         <div>
@@ -30,32 +30,110 @@
       </nav>
     </div>
 
-    <main class="px-16 py-6">
-      <div class="flex justify-between">
+    <main class="px-16 py-6 bg-amber-50">
+      <div class="flex justify-end text-yellow-400">
         <a href="#">Log in</a>
-        <a href="#">Sign up</a>
+        <a href="#" class="ml-4">Sign up</a>
       </div>
 
-      <div class="flex items-center">
+      <div class="flex">
         <div class="bg-red-500 h-4 w-6"></div>
         <div class="bg-blue-300 h-8  w-6"></div>
         <div class="bg-green-500 h-12 w-6"></div>
       </div>
 
-      <header>
-        <h2>Recipes</h2>
-        <h3>For Ninjas</h3>
+      <header class="mt-3">
+        <h2 class="text-7xl">Recipes</h2>
+        <h3 class="text-3xl">For Ninjas</h3>
       </header>
 
-      <div>
+      <!--      <div style="width: 200px">-->
+      <div >
         <h4 class="font-bold mt-12 pb-2 border-b border-gray-200">Latest Recipes</h4>
-        <div class="mt-8">
+        <div class="mt-8 grid md:grid-cols-3 sm:grid-cols-1">
           <!-- cards go here -->
-          <div class="bg-white rounded overflow-hidden shadow-md">
-            <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg" alt="stew">
-            <div>
-              <span class="font-bold">5 Bean Chili Stew</span>
-              <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
+            </div>
+          </div>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
+            </div>
+          </div>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
+            </div>
+          </div>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
+            </div>
+          </div>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
+            </div>
+          </div>
+          <div class="card mt-4 mr-4">
+            <div class="p-4">
+              <img src="https://raw.githubusercontent.com/iamshaunjp/tailwind-tutorial/lesson-2/public/img/stew.jpg"
+                   alt="stew" class="w-full h-32 sm:h-48">
+              <div class="m-2">
+                <span class="font-bold">5 Bean Chili Stew</span>
+                <span class="block text-gray-500 text-sm">Recipe by Mario</span>
+              </div>
+            </div>
+
+            <div class="text-xl uppercase font-bold rounded-full bg-green-50 overflow-hidden absolute top-0 p-2 mt-6 ml-6">
+              <span>25 min</span>
             </div>
           </div>
         </div>

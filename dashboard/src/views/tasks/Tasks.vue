@@ -2,7 +2,7 @@
 import { reactive,ref, h, onMounted } from 'vue';
 import { NButton, useMessage,useDialog } from 'naive-ui';
 import type { DataTableColumns } from 'naive-ui';
-import { GetTasks } from '@/api/task';
+import { GetTasks,RestartTask,DelTask,EditTask,AddTask } from '@/api/task';
 import type {Task} from "@/api/task";
 
 const message = useMessage();
@@ -142,6 +142,17 @@ const createColumns = (): DataTableColumns<Task> => {
                   },
                   { default: () => 'Start' }
               ),
+              h(
+                  NButton,
+                  {
+                    strong: true,
+                    tertiary: true,
+                    size: 'small',
+                    class: 'flex ml-1 bg-red-500',
+                    onClick: () => delTask(row)
+                  },
+                  { default: () => 'Del' }
+              ),
             ]
         );
       }
@@ -155,17 +166,39 @@ const edit = (row: Task) => {
   activeRow = row
 }
 
-const reset = (row: Task) => {
+const delTask = async(row: Task) => {
   dialog.warning({
-    title: 'Confirm',
-    content: 'Are you sure?',
-    positiveText: 'Sure',
-    negativeText: 'Not Sure',
-    onPositiveClick: () => {
-      message.success('Sure')
+    title: '警告',
+    content: "是否刪除",
+    positiveText: 'Yes',
+    negativeText: 'Not',
+    onPositiveClick: async () => {
+      await DelTask(row);
+      await loadData();
     },
     onNegativeClick: () => {
-      message.error('Not Sure')
+    }
+  })
+}
+
+const reset = (row: Task) => {
+  let msg = "是否停止"
+  if (row.run) {
+    msg = "是否开启"
+  }
+
+  dialog.warning({
+    title: '警告',
+    content: msg,
+    positiveText: 'Yes',
+    negativeText: 'Not',
+    onPositiveClick: async () => {
+      await restartTask(row);
+
+      // message.success('Sure')
+    },
+    onNegativeClick: () => {
+      // message.error('Not Sure')
     }
   })
 }
@@ -180,8 +213,40 @@ const newTask = () => {
 }
 
 onMounted(async () => {
+ await  loadData();
+});
+
+const onPositiveClick = () => {
+  editModal.value = false
+}
+
+const addTask = async()=> {
+  const resp = await AddTask(addRow);
+  if (resp.success) {
+    message.success('Success')
+  }else {
+    message.error(resp.message)
+  }
+  await loadData();
+
+  addRow = reactive<Task>({
+    ID: 0,
+    cmd: "",
+    created_at: "",
+    harbor_key: "",
+    heartbeat: "",
+    path: "",
+    run: false,
+    task_name: "",
+    updated_at: ""
+  })
+
+  addModal.value = false
+}
+
+const loadData = async () => {
   const tasks = await GetTasks();
-  console.log(tasks);
+  state.columns = [];
   if (tasks.success) {
     state.data.length = 0;
     tasks.data.forEach((task) => {
@@ -189,10 +254,29 @@ onMounted(async () => {
     });
     state.columns = createColumns();
   }
-});
+}
 
-const onPositiveClick = () => {
+const editTask = async() => {
+  await EditTask(activeRow);
+  await loadData();
+  activeRow = reactive<Task>({
+    ID: 0,
+    cmd: "",
+    created_at: "",
+    harbor_key: "",
+    heartbeat: "",
+    path: "",
+    run: false,
+    task_name: "",
+    updated_at: ""
+  })
+
   editModal.value = false
+}
+
+const restartTask = async(row: Task) => {
+    await RestartTask(row);
+    await loadData();
 }
 
 </script>
@@ -244,7 +328,7 @@ const onPositiveClick = () => {
         <div class="flex justify-end">
           <n-button
               type="primary"
-              @click="onPositiveClick"
+              @click="editTask"
           >
             修改
           </n-button>
@@ -283,7 +367,7 @@ const onPositiveClick = () => {
         <div class="flex justify-end">
           <n-button
               type="primary"
-              @click="onPositiveClick"
+              @click="addTask"
           >
             添加
           </n-button>

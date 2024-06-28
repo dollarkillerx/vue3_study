@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
     "naive-ui": "^2.38.2",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.1.7",

@@ -136,3 +136,35 @@ export const DelTask = async(task: Task): Promise<GeneralReturn> => {
         };
     }
 }
+
+export interface LogResp {
+    data: Log[]
+    message: string
+    success: boolean
+}
+
+export interface Log {
+    ID: number
+    created_at: string
+    updated_at: string
+    task_id: number
+    task_name: string
+    success: boolean
+    message?: string
+}
+
+export const GetLogs = async (): Promise<LogResp> => {
+    try {
+        const response = await request.get<LogResp>("/backstage/internal/logs");
+        // console.log(response);
+        return response; // 返回从服务器接收到的数据
+    } catch (error) {
+        console.log(error)
+        // 如果发生错误，可以返回一个自定义的错误对象
+        return {
+            data: [],
+            message: "mylog failed due to server error.",
+            success: false
+        };
+    }
+};

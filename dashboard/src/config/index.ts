@@ -15,7 +15,7 @@ export const MenuConfig: MenusInterface[] = [
         path: "/tasks",
     },
     {
-        title: "logs",
-        path: "/logs",
+        title: "mylog",
+        path: "/mylog",
     }
 ];

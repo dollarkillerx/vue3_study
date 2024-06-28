@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import type {MenusInterface} from './index.ts';
+import router from "@/router";
+const props = defineProps<{
+  menus: MenusInterface[],
+}>();
 
-const props = defineProps<MenusInterface>();
 </script>
 
 <template>
@@ -12,8 +15,10 @@ const props = defineProps<MenusInterface>();
       <span class="w-full break-all m-0 p-0" style="font-size: 10px;line-height: normal;">https://github.com/dollarkillerx/harbor_easy_cicd</span>
     </div>
     <ul>
-      <li>
-        sadasd
+      <li v-for="menu in props.menus" :key="menu.title">
+        <RouterLink :to="menu.path">
+          <div class="bg-amber-200 p-2 m-0.5 hover:bg-amber-300 text-center text-xl uppercase">{{menu.title}}</div>
+        </RouterLink>
       </li>
     </ul>
   </div>

@@ -1,16 +1,24 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import Menu from '@/components/Menu/Menu.vue'
+import { RouterView } from 'vue-router'
+import {MenuConfig} from '@/config'
+import {JWT} from "@/utils/jwt";
+import router from "@/router";
 
 const open = ref(false)
+
+const logout = () => {
+  JWT.removeToken()
+  router.push('/login')
+}
 </script>
 
 <template>
   <main>
-    <div class="flex h-screen">
-      <!--      left-->
-      <div :class="[!open&&'w-0','w-72 duration-500']">
-        <Menu></Menu>
+    <div class="flex h-screen bg-gray-100" >
+      <div :class="[!open&&'hidden','w-72 duration-500']">
+        <Menu :menus="MenuConfig"></Menu>
       </div>
       <!--      right-->
       <div class="bg-amber-50 flex-1 relative">
@@ -21,6 +29,14 @@ const open = ref(false)
           <path strokeLinecap="round" strokeLinejoin="round"
                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"/>
         </svg>
+
+<!--        header-->
+        <div class="flex flex-col">
+          <div class="flex justify-end bg-white items-center" style="height: 50px">
+            <div @click="logout" class="bg-white border-cyan-300 border px-3 py-1.5 rounded-full hover:cursor-pointer hover:bg-cyan-300 hover:text-white">Logout</div>
+          </div>
+          <router-view class="flex-1"></router-view>
+        </div>
       </div>
     </div>
   </main>

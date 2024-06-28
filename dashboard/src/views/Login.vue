@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, } from 'vue';
+import { ref, reactive,onMounted  } from 'vue';
 import { useMessage } from 'naive-ui';
 import {Login} from '@/api/login'
 import {JWT}  from "@/utils/jwt";
@@ -65,6 +65,12 @@ const handleValidateButtonClick = async() => {
     });
   }
 };
+
+onMounted(() => {
+  if (JWT.getToken() != null) {
+    router.push('/dashboard');
+  }
+});
 </script>
 
 <template>

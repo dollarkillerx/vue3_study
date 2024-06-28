@@ -9,7 +9,22 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: '/dashboard',
+          name: 'dashboard',
+          component: () => import('../views/dashboard/Dashboard.vue')
+        },{
+          path: '/tasks',
+          name: 'tasks',
+          component: () => import('../views/tasks/Tasks.vue')
+        },{
+          path: '/logs',
+          name: 'logs',
+          component: () => import('../views/tasks/Tasks.vue')
+        }
+      ]
     },
     {
       path: '/login',

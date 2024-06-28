@@ -16,7 +16,7 @@ export interface Task {
     cmd: string
     heartbeat: string
     run: boolean
-    last_run_time: number
+    last_run_time?: number
 }
 
 export const GetTasks = async (): Promise<TaskResp> => {

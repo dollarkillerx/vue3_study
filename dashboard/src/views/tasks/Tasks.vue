@@ -1,83 +1,192 @@
 <script setup lang="ts">
-import {ref,h} from 'vue';
-import { NButton, useMessage } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
-const message = useMessage()
-type Song = {
-  no: number
-  title: string
-  length: string
-}
+import { reactive,ref, h, onMounted } from 'vue';
+import { NButton, useMessage } from 'naive-ui';
+import type { DataTableColumns } from 'naive-ui';
+import { GetTasks } from '@/api/task';
+import type {Task} from "@/api/task";
 
-const createColumns = ({
-                         play
-                       }: {
-  play: (row: Song) => void
-}): DataTableColumns<Song> => {
+const message = useMessage();
+
+const editModal = ref(false);
+
+const createColumns = (): DataTableColumns<Task> => {
   return [
     {
-      title: 'No',
-      key: 'no'
+      title: 'ID',
+      key: 'ID'
     },
     {
-      title: 'Title',
-      key: 'title'
+      title: 'Harbor Key',
+      key: 'harbor_key'
     },
     {
-      title: 'Length',
-      key: 'length'
+      title: '任務名稱',
+      key: 'task_name'
     },
     {
-      title: 'Action',
-      key: 'actions',
-      render (row) {
+      title: '執行路徑',
+      key: 'path'
+    },{
+      title: 'cmd',
+      key: 'cmd'
+    },{
+      title: 'heartbeat',
+      key: 'heartbeat'
+    },
+    {
+      title: '服務是否運行',
+      key: 'run',
+      render(row) {
+        if (row.run) {
+          return h(
+              NButton,
+              {
+                strong: true,
+                tertiary: true,
+                size: 'small',
+                class: 'text-green-500',
+              },
+              { default: () => 'Running' }
+          );
+        }
         return h(
             NButton,
             {
               strong: true,
               tertiary: true,
               size: 'small',
-              onClick: () => play(row)
+              class: 'text-red-500',
             },
-            { default: () => 'Play' }
-        )
+            { default: () => 'Stopped' }
+        );
+      }
+    },{
+      title: '最後運行時間',
+      key: 'last_run_time',
+      render(row) {
+        if (row.last_run_time != 0) {
+          const date = new Date(row.last_run_time!);
+          const dateString = date.toLocaleDateString();
+          return h(
+              'span',
+              dateString
+          );
+        }
+      }
+    },
+    {
+      title: '修改',
+      key: 'actions',
+      render(row) {
+        return h(
+            'div',
+            {
+              class: 'flex flex-row'
+            },
+            [
+              h(
+                  NButton,
+                  {
+                    strong: true,
+                    tertiary: true,
+                    size: 'small',
+                    class: 'flex mr-1',
+                    onClick: () => edit(row)
+                  },
+                  { default: () => 'Edit' }
+              ),
+              row.run?h(
+                  NButton,
+                  {
+                    strong: true,
+                    tertiary: true,
+                    size: 'small',
+                    class: 'text-red-500',
+                    onClick: () => reset(row)
+                  },
+                  { default: () => 'Stop' }
+              ):h(
+                  NButton,
+                  {
+                    strong: true,
+                    tertiary: true,
+                    size: 'small',
+                    class: 'text-green-500',
+                    onClick: () => reset(row)
+                  },
+                  { default: () => 'Start' }
+              ),
+            ]
+        );
       }
     }
-  ]
+  ];
+};
+
+const edit = (row: Task) => {
+  // alert(row.last_run_time)
+  editModal.value = true
 }
 
-const columns= createColumns({
-  play (row: Song) {
-    message.info(`Play ${row.title}`)
-  }
-})
+const reset = (row: Task) => {
+  alert(row.last_run_time)
+}
 
-const data: Song[] = [
-  { no: 3, title: 'Wonderwall', length: '4:18' },
-  { no: 4, title: "Don't Look Back in Anger", length: '4:48' },
-  { no: 12, title: 'Champagne Supernova', length: '7:27' }
-]
+const state = reactive({
+  columns: createColumns(),
+  data: <Task[]>[]
+});
+
+onMounted(async () => {
+  const tasks = await GetTasks();
+  console.log(tasks);
+  if (tasks.success) {
+    state.data.length = 0;
+    tasks.data.forEach((task) => {
+      state.data.push(task);
+    });
+    state.columns = createColumns();
+  }
+});
 </script>
 
 <template>
   <div class="p-4">
-<!--    header-->
+    <!-- header -->
     <div class="bg-white h-30 rounded overflow-hidden shadow-lg p-2">
       <h1 class="font-bold text-xl mt-2">Tasks</h1>
       <n-button type="primary" dashed>
         添加任务
       </n-button>
     </div>
-<!--    body-->
+    <!-- body -->
     <n-data-table
-        :columns="columns"
-        :data="data"
+        :columns="state.columns"
+        :data="state.data"
         :pagination="false"
         :bordered="false"
     />
   </div>
+
+  <n-modal v-model:show="editModal" >
+    <n-card
+        style="width: 600px"
+        title="模态框"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+    >
+      <template #header-extra>
+        噢！
+      </template>
+      内容
+      <template #footer>
+        尾部
+      </template>
+    </n-card>
+  </n-modal>
 </template>
 
 <style scoped>
-
 </style>

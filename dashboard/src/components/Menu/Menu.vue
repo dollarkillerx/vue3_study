@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import type {MenusInterface} from './index.ts';
-import router from "@/router";
 const props = defineProps<{
   menus: MenusInterface[],
 }>();

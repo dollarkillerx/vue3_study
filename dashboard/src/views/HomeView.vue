@@ -6,7 +6,7 @@ import {MenuConfig} from '@/config'
 import {JWT} from "@/utils/jwt";
 import router from "@/router";
 
-const open = ref(false)
+const open = ref(true)
 
 const logout = () => {
   JWT.removeToken()

@@ -1,7 +1,7 @@
 import type {MenusInterface} from "@/components/Menu";
 
 export const CONFIG = {
-    apiURI: "https://r_test.dollarkiller.com",
+    apiURI: "",
     timeout: 3000, // Milliseconds
 };
 

@@ -33,7 +33,7 @@ const logout = () => {
 <!--        header-->
         <div class="flex flex-col">
           <div class="flex justify-end bg-white items-center" style="height: 50px">
-            <div @click="logout" class="bg-white border-cyan-300 border px-3 py-1.5 rounded-full hover:cursor-pointer hover:bg-cyan-300 hover:text-white">Logout</div>
+            <div @click="logout" class="bg-white border-cyan-300 border px-3 py-1.5 rounded-full hover:cursor-pointer hover:bg-cyan-300 hover:text-white m-5">Logout</div>
           </div>
           <router-view class="flex-1"></router-view>
         </div>

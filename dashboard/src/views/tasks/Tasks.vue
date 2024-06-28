@@ -1,13 +1,39 @@
 <script setup lang="ts">
 import { reactive,ref, h, onMounted } from 'vue';
-import { NButton, useMessage } from 'naive-ui';
+import { NButton, useMessage,useDialog } from 'naive-ui';
 import type { DataTableColumns } from 'naive-ui';
 import { GetTasks } from '@/api/task';
 import type {Task} from "@/api/task";
 
 const message = useMessage();
+const dialog = useDialog()
+
+let activeRow = reactive<Task>({
+  ID: 0,
+  cmd: "",
+  created_at: "",
+  harbor_key: "",
+  heartbeat: "",
+  path: "",
+  run: false,
+  task_name: "",
+  updated_at: ""
+});
+
+let addRow = reactive<Task>({
+  ID: 0,
+  cmd: "",
+  created_at: "",
+  harbor_key: "",
+  heartbeat: "",
+  path: "",
+  run: false,
+  task_name: "",
+  updated_at: ""
+});
 
 const editModal = ref(false);
+const addModal = ref(false);
 
 const createColumns = (): DataTableColumns<Task> => {
   return [
@@ -126,16 +152,32 @@ const createColumns = (): DataTableColumns<Task> => {
 const edit = (row: Task) => {
   // alert(row.last_run_time)
   editModal.value = true
+  activeRow = row
 }
 
 const reset = (row: Task) => {
-  alert(row.last_run_time)
+  dialog.warning({
+    title: 'Confirm',
+    content: 'Are you sure?',
+    positiveText: 'Sure',
+    negativeText: 'Not Sure',
+    onPositiveClick: () => {
+      message.success('Sure')
+    },
+    onNegativeClick: () => {
+      message.error('Not Sure')
+    }
+  })
 }
 
 const state = reactive({
   columns: createColumns(),
   data: <Task[]>[]
 });
+
+const newTask = () => {
+  addModal.value = true;
+}
 
 onMounted(async () => {
   const tasks = await GetTasks();
@@ -148,6 +190,11 @@ onMounted(async () => {
     state.columns = createColumns();
   }
 });
+
+const onPositiveClick = () => {
+  editModal.value = false
+}
+
 </script>
 
 <template>
@@ -155,7 +202,7 @@ onMounted(async () => {
     <!-- header -->
     <div class="bg-white h-30 rounded overflow-hidden shadow-lg p-2">
       <h1 class="font-bold text-xl mt-2">Tasks</h1>
-      <n-button type="primary" dashed>
+      <n-button type="primary" dashed @click="newTask">
         添加任务
       </n-button>
     </div>
@@ -171,21 +218,81 @@ onMounted(async () => {
   <n-modal v-model:show="editModal" >
     <n-card
         style="width: 600px"
-        title="模态框"
         :bordered="false"
         size="huge"
         role="dialog"
         aria-modal="true"
     >
-      <template #header-extra>
-        噢！
-      </template>
-      内容
+      <div class="flex justify-between pb-2">
+        <div class="text-lg">修改</div>
+        <div class="text-red-500 cursor-pointer" @click="onPositiveClick">X</div>
+      </div>
+      <n-space vertical>
+        Harbor Key:
+        <n-input v-model:value="activeRow.harbor_key" type="text" placeholder="Harbor Key" />
+        任務名稱:
+        <n-input v-model:value="activeRow.task_name" type="text" placeholder="任務名稱" />
+        執行路徑:
+        <n-input v-model:value="activeRow.path" type="text" placeholder="執行路徑" />
+        cmd:
+        <n-input v-model:value="activeRow.cmd" type="text" placeholder="cmd" />
+        heartbeat:
+        <n-input v-model:value="activeRow.heartbeat" type="text" placeholder="heartbeat" />
+      </n-space>
+
       <template #footer>
-        尾部
+        <div class="flex justify-end">
+          <n-button
+              type="primary"
+              @click="onPositiveClick"
+          >
+            修改
+          </n-button>
+        </div>
       </template>
+
     </n-card>
   </n-modal>
+
+  <n-modal v-model:show="addModal" >
+    <n-card
+        style="width: 600px"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+    >
+      <div class="flex justify-between pb-2">
+        <div class="text-lg">添加</div>
+        <div class="text-red-500 cursor-pointer" @click="addModal = false">X</div>
+      </div>
+      <n-space vertical>
+        Harbor Key:
+        <n-input v-model:value="addRow.harbor_key" type="text" placeholder="Harbor Key" />
+        任務名稱:
+        <n-input v-model:value="addRow.task_name" type="text" placeholder="任務名稱" />
+        執行路徑:
+        <n-input v-model:value="addRow.path" type="text" placeholder="執行路徑" />
+        cmd:
+        <n-input v-model:value="addRow.cmd" type="text" placeholder="cmd" />
+        heartbeat:
+        <n-input v-model:value="addRow.heartbeat" type="text" placeholder="heartbeat" />
+      </n-space>
+
+      <template #footer>
+        <div class="flex justify-end">
+          <n-button
+              type="primary"
+              @click="onPositiveClick"
+          >
+            添加
+          </n-button>
+        </div>
+      </template>
+
+    </n-card>
+  </n-modal>
+
 </template>
 
 <style scoped>

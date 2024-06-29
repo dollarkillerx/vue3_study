@@ -25,12 +25,6 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-		{
-			"path": "pages/demo1/demo1",
-			"style": {
-				"navigationStyle": "custom"
-			}
 		}
 	],
 	"globalStyle": {

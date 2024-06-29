@@ -10,7 +10,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "小叮当 购物"
+				"navigationBarTitleText": "小叮当 购物",
+				"navigationStyle": "custom"
 			}
 		},
 		{

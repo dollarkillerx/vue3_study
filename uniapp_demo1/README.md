@@ -4,6 +4,7 @@
 pages.json 路由 导航栏 tabBar
 ```
 
+![img.png](img.png)
 
 uni-tailwind
 ``` 
